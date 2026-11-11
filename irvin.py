@@ -45,3 +45,24 @@ def irvin_curve(key, T, Ed, Nd_min=1e10, Nd_max=1e20, points=201, Na0=0.0, Ea=0.
         curve["sigma"].append(r["sigma"])
         curve["rho"].append(r["rho"])
     return curve
+
+
+def mobility_curve(key, Nd0, Ed, T_min=100, T_max=500, points=81, Na0=0.0, Ea=0.045):
+    # подвижность от температуры при заданной Nd0: возвращает словарь списков
+    if T_min <= 0 or T_max <= T_min:
+        raise ValueError("Нужно 0 < T_min < T_max.")
+    if points < 2:
+        raise ValueError("Число точек должно быть не меньше 2.")
+
+    curve = {"T": [], "mu_n": [], "mu_p": [], "n": [], "sigma": [], "rho": []}
+    T_step = (T_max - T_min) / (points - 1)
+    for i in range(points):
+        T = T_min + i * T_step
+        r = calculate_point(key, T, Nd0, Ed, Na0, Ea)
+        curve["T"].append(T)
+        curve["mu_n"].append(r["mu_n"])
+        curve["mu_p"].append(r["mu_p"])
+        curve["n"].append(r["n"])
+        curve["sigma"].append(r["sigma"])
+        curve["rho"].append(r["rho"])
+    return curve
