@@ -28,9 +28,9 @@ def density_of_states(mass, T):
 
 def solve(material, T, Nd0, Ed, Na0=0.0, Ea=0.045):
     # T в К, концентрации в см^-3, энергии Ed и Ea в эВ
-    Eg_ev = band_gap(material, T)
     if T <= 0:
         raise ValueError("Температура должна быть больше 0 К.")
+    Eg_ev = band_gap(material, T)
     if Nd0 < 0 or Na0 < 0:
         raise ValueError("Концентрации примесей не могут быть отрицательными.")
     if Ed <= 0 or Ed >= Eg_ev:
